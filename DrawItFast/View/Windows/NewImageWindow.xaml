@@ -1,0 +1,17 @@
+﻿<Window x:Class="DrawItFast.View.Windows.NewImageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DrawItFast.View.Windows"
+        xmlns:controls="clr-namespace:DrawItFast.View.Controls"
+        mc:Ignorable="d"
+        Title="New image" Height="200" Width="200" ResizeMode="NoResize">
+    <Grid HorizontalAlignment="Center">
+        <StackPanel Orientation="Vertical">
+            <controls:NamedTextBox LabelText="Width" x:Name="WidthInput"></controls:NamedTextBox>
+            <controls:NamedTextBox LabelText="Height" x:Name="HeightInput"></controls:NamedTextBox>
+        </StackPanel>
+        <Button x:Name="CreateButton" Content="Ok" Width="80" Height="30" VerticalAlignment="Bottom" Margin="10" Click="CreateButton_Click"/>
+    </Grid>
+</Window>
