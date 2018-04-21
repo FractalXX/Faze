@@ -1,30 +1,36 @@
-﻿<Window
+﻿<Metro:MetroWindow
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DrawItFast.View.Windows"
-        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="DrawItFast.View.Windows.MainWindow"
+        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
         xmlns:Controls="clr-namespace:DrawItFast.View.Controls"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+        xmlns:Metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:Themes1="clr-namespace:Xceed.Wpf.Toolkit.Themes;assembly=Xceed.Wpf.Toolkit" x:Class="DrawItFast.View.Windows.MainWindow"
         mc:Ignorable="d"
         x:Name="Main"
-        Title="Draw it fast!" Height="450" Width="800"
+        Title="Faze" Height="450" Width="800"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
         MinWidth="400" MinHeight="200">
-    <Window.Resources>
+    <Metro:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/View/Templates/SideBar.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <SolidColorBrush x:Key="BorderBarColor" Color="#222222"/>
+            <SolidColorBrush x:Key="ToolBarBackgroundColor" Color="#333333"/>
+            <SolidColorBrush x:Key="CanvasBackground" Color="#444444"/>
         </ResourceDictionary>
-    </Window.Resources>
+    </Metro:MetroWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Border BorderBrush="Black" BorderThickness="0 0 0 1">
-            <Menu Grid.Row="0" Background="#222222" Foreground="White">
+            <Menu Grid.Row="0" Background="{StaticResource BorderBarColor}" Foreground="White">
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Click="New_Click"/>
                     <MenuItem Header="_Open"/>
@@ -36,15 +42,12 @@
 
         <DockPanel Grid.Row="1">
             <Border BorderBrush="Black" BorderThickness="0 0 1 0">
-                <ToolBarTray x:Name="Toolbox" Width="40" Orientation="Vertical" Background="#222222">
-                    <ToolBar x:Name="CurveToolBox" Background="#444444" Width="{Binding Width, ElementName=Toolbox}" Style="{DynamicResource SideToolBarStyle}">
-                    </ToolBar>
-                    <ToolBar Background="#444444" Width="{Binding Width, ElementName=Toolbox}" Style="{DynamicResource SideToolBarStyle}">
-                    </ToolBar>
+                <ToolBarTray x:Name="Toolbox" Width="40" Orientation="Vertical" Background="{StaticResource BorderBarColor}">
+                    <ToolBar x:Name="BasicToolBox" Background="{StaticResource ToolBarBackgroundColor}" Width="{Binding Width, ElementName=Toolbox}" Style="{DynamicResource SideToolBarStyle}"/>
                 </ToolBarTray>
             </Border>
 
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="#333338">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="{StaticResource CanvasBackground}">
                 <Canvas x:Name="DrawCanvas" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" Width="{Binding ImageWidth, ElementName=Main}" Height="{Binding ImageHeight, ElementName=Main}" Margin="10"
                         MouseDown="DrawCanvas_MouseDown"
                         MouseUp="DrawCanvas_MouseUp"
@@ -55,8 +58,13 @@
                     <Controls:D2DContainer x:Name="D2DControl" Width="{Binding ImageWidth, ElementName=Main}" Height="{Binding ImageHeight, ElementName=Main}"/>
                 </Canvas>
             </ScrollViewer>
-
         </DockPanel>
 
+        <Border BorderBrush="Black" BorderThickness="1 0 0 0" HorizontalAlignment="Right" Grid.Row="1">
+            <xctk:PropertyGrid MaxWidth="400" Width="200" x:Name="CurrentToolData" Background="{StaticResource ToolBarBackgroundColor}" SelectedObject="{Binding SelectedTool, ElementName=Main}" AutoGenerateProperties="True" PreparePropertyItem="CurrentToolData_PreparePropertyItem">
+
+            </xctk:PropertyGrid>
+        </Border>
+
     </Grid>
-</Window>
+</Metro:MetroWindow>

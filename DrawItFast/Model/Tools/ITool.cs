@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ using SharpDX.Mathematics.Interop;
 
 namespace DrawItFast.Model.Tools
 {
-    interface ITool
+    public interface ITool
     {
         void MouseDown(Point point, MouseEventArgs args);
         void MouseMove(Point point, MouseEventArgs args);

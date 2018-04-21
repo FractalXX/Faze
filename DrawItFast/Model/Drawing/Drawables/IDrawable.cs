@@ -14,7 +14,7 @@ namespace DrawItFast.Model.Drawing.Drawables
         bool IsSelected { get; set; }
 
         void Draw(RenderTarget target);
-        bool IsHovering(Point p);
+        bool IsMouseHovering(Point p);
 
         void SetPoint(int index, Point p);
         void AddPoint(Point p);

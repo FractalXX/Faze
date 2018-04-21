@@ -248,7 +248,7 @@ namespace DrawItFast.Model.Drawing.Drawables
             this.FillColor = color;
         }
 
-        public bool IsHovering(Point p)
+        public bool IsMouseHovering(Point p)
         {
             return this.IsPointInRange(p, View.Windows.MainWindow.Instance.InterpolationOffset);
         }

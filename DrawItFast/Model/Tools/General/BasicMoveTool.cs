@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,8 @@ namespace DrawItFast.Model.Tools.General
     {
         private IDrawable selectedShape;
         private int grabbedPointIndex;
+
+        private Point mouseBuffer;
 
         public IDrawable SelectedShape
         {
@@ -34,24 +37,18 @@ namespace DrawItFast.Model.Tools.General
             {
                 if (this.selectedShape != null)
                 {
-                    bool grabbed = false;
-                    for (int j = 0; j < this.selectedShape.PointCount; j++)
+                    for (int j = 0; j < this.selectedShape.PointCount && this.grabbedPointIndex == -1; j++)
                     {
                         Point p = this.selectedShape.GetPoint(j);
                         if (Math.Abs(p.X - point.X) <= 5 && Math.Abs(p.Y - point.Y) <= 5)
                         {
                             this.grabbedPointIndex = j;
-                            grabbed = true;
                         }
-                    }
-
-                    if (!grabbed)
-                    {
-                        this.selectedShape.AddPoint(point);
-                        this.grabbedPointIndex = this.selectedShape.PointCount - 1;
                     }
                 }
             }
+
+            this.mouseBuffer = point;
         }
 
         public void MouseMove(Point point, MouseEventArgs args)
@@ -69,11 +66,13 @@ namespace DrawItFast.Model.Tools.General
                         for (int i = 0; i < this.selectedShape.PointCount; i++)
                         {
                             Point p = this.selectedShape.GetPoint(i);
-                            this.selectedShape.SetPoint(i, new Point(p.X + p.X - point.X, p.Y + p.Y - point.Y));
+                            this.selectedShape.SetPoint(i, new Point(p.X + point.X - mouseBuffer.X, p.Y + point.Y - mouseBuffer.Y));
                         }
                     }
                 }
             }
+
+            this.mouseBuffer = point;
         }
 
         public void MouseUp(Point point, MouseEventArgs args)

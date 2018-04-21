@@ -2,12 +2,16 @@
 using DrawItFast.View.Windows;
 using SharpDX.Mathematics.Interop;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+
+using DrawItFast.Model.Drawing;
 
 namespace DrawItFast.Model.Tools.Curves
 {
@@ -28,27 +32,27 @@ namespace DrawItFast.Model.Tools.Curves
         private RawColor4 fillColor;
         private int lineThickness;
 
-        public RawColor4 Color1
+        public Color Color1
         {
             get
             {
-                return this.lineColor;
+                return this.lineColor.ToMediaColor();
             }
             set
             {
-                this.lineColor = value;
+                this.lineColor = value.ToRawColor4();
             }
         }
 
-        public RawColor4 Color2
+        public Color Color2
         {
             get
             {
-                return this.fillColor;
+                return this.fillColor.ToMediaColor();
             }
             set
             {
-                this.fillColor = value;
+                this.fillColor = value.ToRawColor4();
             }
         }
 
@@ -109,20 +113,9 @@ namespace DrawItFast.Model.Tools.Curves
         {
             if (args.LeftButton == MouseButtonState.Pressed)
             {
-                if (this.selectedShape != null)
+                if (this.selectedShape != null && this.grabbedPointIndex != -1)
                 {
-                    if (this.grabbedPointIndex != -1)
-                    {
-                        this.selectedShape.SetPoint(this.grabbedPointIndex, point);
-                    }
-                    else
-                    {
-                        for (int i = 0; i < this.selectedShape.PointCount; i++)
-                        {
-                            Point p = this.selectedShape.GetPoint(i);
-                            this.selectedShape.SetPoint(i, new Point(p.X + p.X - point.X, p.Y + p.Y - point.Y));
-                        }
-                    }
+                    this.selectedShape.SetPoint(this.grabbedPointIndex, point);
                 }
             }
         }

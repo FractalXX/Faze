@@ -18,17 +18,19 @@ using DrawItFast.Model.Drawing;
 using DrawItFast.Model.Drawing.Drawables;
 using DrawItFast.Model.Tools;
 using DrawItFast.View.Controls;
+using MahApps.Metro.Controls;
 
 namespace DrawItFast.View.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         #region Data binding
         public static readonly DependencyProperty ImageWidthProperty = DependencyProperty.Register("ImageWidth", typeof(int), typeof(MainWindow), new UIPropertyMetadata(0));
         public static readonly DependencyProperty ImageHeightProperty = DependencyProperty.Register("ImageHeight", typeof(int), typeof(MainWindow), new UIPropertyMetadata(0));
+        public static readonly DependencyProperty SelectedToolProperty = DependencyProperty.Register("SelectedTool", typeof(ITool), typeof(MainWindow), new UIPropertyMetadata(Tools.BasicMoveTool));
 
         public int ImageWidth
         {
@@ -41,10 +43,13 @@ namespace DrawItFast.View.Windows
             get { return (int)this.GetValue(ImageHeightProperty); }
             set { this.SetValue(ImageHeightProperty, value); }
         }
-        #endregion
 
-        private int grabbedIndex;
-        private int selectedShape;
+        public ITool SelectedTool
+        {
+            get { return (ITool)this.GetValue(SelectedToolProperty); }
+            set { this.SetValue(SelectedToolProperty, value); }
+        }
+        #endregion
 
         public float PointSize;
 
@@ -60,8 +65,6 @@ namespace DrawItFast.View.Windows
 
         private List<IDrawable> drawables;
         private List<ITool> tools;
-
-        private ITool selectedTool;
 
         public MainWindow()
         {
@@ -80,7 +83,6 @@ namespace DrawItFast.View.Windows
             this.colorGuide = Colors.Pink;
             this.colorFill = Colors.Gray;
 
-            this.selectedShape = -1;
             this.lineThickness = 1;
 
             this.InterpolationOffset = 5;
@@ -108,11 +110,11 @@ namespace DrawItFast.View.Windows
                 toolButton.GroupName = "Tools";
                 toolButton.Checked += (obj, args) =>
                 {
-                    this.selectedTool = tool as ITool;
+                    this.SelectedTool = tool as ITool;
                     this.UpdateToolColors();
                 };
 
-                this.CurveToolBox.Items.Add(toolButton);
+                this.BasicToolBox.Items.Add(toolButton);
 
                 this.tools.Add(tool as ITool);
             }
@@ -120,11 +122,11 @@ namespace DrawItFast.View.Windows
 
         private void UpdateToolColors()
         {
-            if(this.selectedTool != null && this.selectedTool is IDrawTool)
+            if(this.SelectedTool != null && this.SelectedTool is IDrawTool)
             {
-                IDrawTool tool = this.selectedTool as IDrawTool;
-                tool.Color1 = this.colorLine.ToRawColor4();
-                tool.Color2 = this.colorFill.ToRawColor4();
+                IDrawTool tool = this.SelectedTool as IDrawTool;
+                tool.Color1 = this.colorLine;
+                tool.Color2 = this.colorFill;
             }
         }
 
@@ -139,11 +141,11 @@ namespace DrawItFast.View.Windows
             Point mousePosition = e.GetPosition(this.DrawCanvas);
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if(this.selectedTool != null && this.selectedTool is IMoveTool)
+                if(this.SelectedTool != null && this.SelectedTool is IMoveTool)
                 {
                     for (int i = 0; i < this.drawables.Count; i++)
                     {
-                        if (this.drawables[i].IsHovering(mousePosition) && (this.selectedTool as IMoveTool).TrySelectShape(this.drawables[i]))
+                        if (this.drawables[i].IsMouseHovering(mousePosition) && (this.SelectedTool as IMoveTool).TrySelectShape(this.drawables[i]))
                         {
                             break;
                         }
@@ -151,25 +153,25 @@ namespace DrawItFast.View.Windows
                 }
             }
 
-            if (this.selectedTool != null)
+            if (this.SelectedTool != null)
             {
-                this.selectedTool.MouseDown(mousePosition, e);
+                this.SelectedTool.MouseDown(mousePosition, e);
             }
         }
 
         private void DrawCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if(this.selectedTool != null)
+            if(this.SelectedTool != null)
             {
-                this.selectedTool.MouseMove(e.GetPosition(this.DrawCanvas), e);
+                this.SelectedTool.MouseMove(e.GetPosition(this.DrawCanvas), e);
             }
         }
 
         private void DrawCanvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if(this.selectedTool != null)
+            if(this.SelectedTool != null)
             {
-                this.selectedTool.MouseUp(e.GetPosition(this.DrawCanvas), e);
+                this.SelectedTool.MouseUp(e.GetPosition(this.DrawCanvas), e);
             }
         }
 
@@ -186,6 +188,14 @@ namespace DrawItFast.View.Windows
             if (this.drawables.Contains(shape))
             {
                 this.drawables.Remove(shape);
+            }
+        }
+
+        private void CurrentToolData_PreparePropertyItem(object sender, Xceed.Wpf.Toolkit.PropertyGrid.PropertyItemEventArgs e)
+        {
+            if(e.PropertyItem.DisplayName.Equals("SelectedShape"))
+            {
+                e.Handled = false;
             }
         }
     }
