@@ -30,7 +30,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Border BorderBrush="Black" BorderThickness="0 0 0 1">
-            <Menu Grid.Row="0" Background="{StaticResource BorderBarColor}" Foreground="White">
+            <Menu Grid.Row="0" Background="{StaticResource BorderBarColor}">
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Click="New_Click"/>
                     <MenuItem Header="_Open"/>
@@ -61,7 +61,7 @@
         </DockPanel>
 
         <Border BorderBrush="Black" BorderThickness="1 0 0 0" HorizontalAlignment="Right" Grid.Row="1">
-            <xctk:PropertyGrid MaxWidth="400" Width="200" x:Name="CurrentToolData" Background="{StaticResource ToolBarBackgroundColor}" SelectedObject="{Binding SelectedTool, ElementName=Main}" AutoGenerateProperties="True" PreparePropertyItem="CurrentToolData_PreparePropertyItem">
+            <xctk:PropertyGrid MaxWidth="400" Width="200" x:Name="CurrentToolData" Background="{StaticResource ToolBarBackgroundColor}" SelectedObject="{Binding SelectedTool, ElementName=Main}" AutoGenerateProperties="True" PreparePropertyItem="CurrentToolData_PreparePropertyItem" Foreground="Black">
 
             </xctk:PropertyGrid>
         </Border>

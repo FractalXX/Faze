@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:DrawItFast"
                     xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
-    <SolidColorBrush x:Key="ToolBarButtonHoverBorder" Color="#666666"/>
-    <SolidColorBrush x:Key="ToolBarButtonHover" Color="#555555"/>
-    <SolidColorBrush x:Key="ToolBarButtonPressedBorder" Color="#888888"/>
-    <SolidColorBrush x:Key="ToolBarButtonPressed" Color="#777777"/>
+    <SolidColorBrush x:Key="ToolBarButtonHoverBorder" Color="#555555"/>
+    <SolidColorBrush x:Key="ToolBarButtonHover" Color="#444444"/>
+    <SolidColorBrush x:Key="ToolBarButtonPressedBorder" Color="#777777"/>
+    <SolidColorBrush x:Key="ToolBarButtonPressed" Color="#666666"/>
     <SolidColorBrush x:Key="ToolBarTrayBackground" Color="#FFEEF5FD"/>
     <SolidColorBrush x:Key="ToolBarHorizontalBackground" Color="#FFEEF5FD"/>
     <SolidColorBrush x:Key="ToolBarToggleButtonVerticalBackground" Color="#444444"/>
@@ -124,7 +124,7 @@
     </Style>
     <Style x:Key="SideToolBarStyle" TargetType="{x:Type ToolBar}">
         <Style.Resources>
-            <SolidColorBrush x:Key="RadioButtonChecked" Color="#333333"/>
+            <SolidColorBrush x:Key="RadioButtonChecked" Color="#222222"/>
             <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}" TargetType="{x:Type RadioButton}">
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
                 <Setter Property="Padding" Value="2"/>

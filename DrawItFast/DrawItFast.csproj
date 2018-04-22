@@ -136,18 +136,23 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\Drawing\Drawables\Curves\BezierCurve.cs" />
+    <Compile Include="Model\Drawing\Drawables\Shape.cs" />
+    <Compile Include="Model\Drawing\MathHelper.cs" />
     <Compile Include="Model\ShapeFactory.cs" />
+    <Compile Include="Model\Tools\Curves\BezierCurveTool.cs" />
     <Compile Include="Model\Tools\Curves\HermiteCurveTool.cs" />
     <Compile Include="Model\Tools\General\BasicMoveTool.cs" />
     <Compile Include="Model\Tools\IDrawTool.cs" />
     <Compile Include="Model\Tools\IMoveTool.cs" />
+    <Compile Include="Model\Tools\ShapeTool.cs" />
     <Compile Include="Model\Tools\Tools.cs" />
     <Compile Include="View\Controls\D2DContainer.cs" />
     <Compile Include="Model\Drawing\ColorExtensions.cs" />
     <Compile Include="Model\Drawing\Drawables\IClosable.cs" />
     <Compile Include="Model\Drawing\Drawables\IDrawable.cs" />
     <Compile Include="Model\Drawing\RenderTargetExtensions.cs" />
-    <Compile Include="Model\Drawing\Drawables\HermiteCurve.cs" />
+    <Compile Include="Model\Drawing\Drawables\Curves\HermiteCurve.cs" />
     <Compile Include="Model\Tools\ITool.cs" />
     <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -202,6 +207,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\Tools\BasicMoveTool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Tools\BezierCurveTool.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
