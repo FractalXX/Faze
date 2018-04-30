@@ -85,7 +85,10 @@ namespace DrawItFast.Model.Drawing.Drawables
         public void AddPoint(Point point)
         {
             this.points.Add(new RawVector2() { X = (float)point.X, Y = (float)point.Y });
+            this.OnAddPoint(point);
         }
+
+        protected virtual void OnAddPoint(Point point) { }
 
         public Point GetPoint(int index)
         {

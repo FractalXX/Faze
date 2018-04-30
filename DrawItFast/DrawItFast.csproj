@@ -137,11 +137,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\Drawing\Drawables\Curves\BezierCurve.cs" />
+    <Compile Include="Model\Drawing\Drawables\Curves\Nubs.cs" />
     <Compile Include="Model\Drawing\Drawables\Shape.cs" />
     <Compile Include="Model\Drawing\MathHelper.cs" />
     <Compile Include="Model\ShapeFactory.cs" />
     <Compile Include="Model\Tools\Curves\BezierCurveTool.cs" />
     <Compile Include="Model\Tools\Curves\HermiteCurveTool.cs" />
+    <Compile Include="Model\Tools\Curves\NubsTool.cs" />
     <Compile Include="Model\Tools\General\BasicMoveTool.cs" />
     <Compile Include="Model\Tools\IDrawTool.cs" />
     <Compile Include="Model\Tools\IMoveTool.cs" />
@@ -210,6 +212,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icons\Tools\BezierCurveTool.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Tools\NubsTool.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

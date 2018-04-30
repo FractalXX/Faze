@@ -13,5 +13,6 @@ namespace DrawItFast.Model.Tools
         public static readonly BasicMoveTool BasicMoveTool = new BasicMoveTool();
         public static readonly HermiteCurveTool HermiteCurveTool = new HermiteCurveTool();
         public static readonly BezierCurveTool BezierCurveTool = new BezierCurveTool();
+        public static readonly NubsTool NubsTool = new NubsTool();
     }
 }

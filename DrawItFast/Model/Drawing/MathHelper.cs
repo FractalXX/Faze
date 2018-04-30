@@ -56,5 +56,38 @@ namespace DrawItFast.Model.Drawing
                 Y = point.Y + B(t, n, i) * point.Y
             };
         }
+
+        internal static float NubsFunction(float[] U, float u, int j, int k)
+        {
+            if (k == 1)
+            {
+                if (u >= U[j] && u < U[j + 1])
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+
+            float denom1 = (U[j + k - 1] - U[j]);
+            float denom2 = (U[j + k] - U[j + 1]);
+
+            float part1 = 0;
+            float part2 = 0;
+
+            if (denom1 != 0)
+            {
+                part1 = (u - U[j]) / denom1 * NubsFunction(U, u, j, k - 1);
+            }
+
+            if (denom2 != 0)
+            {
+                part2 = (U[j + k] - u) / denom2 * NubsFunction(U, u, j + 1, k - 1);
+            }
+
+            return part1 + part2;
+        }
     }
 }
