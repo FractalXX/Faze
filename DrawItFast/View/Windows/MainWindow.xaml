@@ -34,7 +34,7 @@
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Click="New_Click"/>
                     <MenuItem Header="_Open"/>
-                    <MenuItem Header="_Save"/>
+                    <MenuItem Header="_Save" Click="Save_Click"/>
                     <MenuItem Header="_Close"/>
                 </MenuItem>
             </Menu>

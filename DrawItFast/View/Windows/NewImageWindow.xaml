@@ -9,8 +9,8 @@
         Title="New image" Height="200" Width="200" ResizeMode="NoResize">
     <Grid HorizontalAlignment="Center">
         <StackPanel Orientation="Vertical">
-            <controls:NamedTextBox LabelText="Width" x:Name="WidthInput"></controls:NamedTextBox>
-            <controls:NamedTextBox LabelText="Height" x:Name="HeightInput"></controls:NamedTextBox>
+            <controls:NamedTextBox Label="Width" x:Name="WidthInput"></controls:NamedTextBox>
+            <controls:NamedTextBox Label="Height" x:Name="HeightInput"></controls:NamedTextBox>
         </StackPanel>
         <Button x:Name="CreateButton" Content="Ok" Width="80" Height="30" VerticalAlignment="Bottom" Margin="10" Click="CreateButton_Click"/>
     </Grid>

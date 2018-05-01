@@ -203,22 +203,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icons\Tools\HermiteCurveTool.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Resources\Icons\Tools\BezierCurveTool.png" />
+    <Resource Include="Resources\Icons\Tools\Brush.png" />
+    <Resource Include="Resources\Icons\Tools\Elliptical Selection.png" />
+    <Resource Include="Resources\Icons\Tools\Fill Bucket.png" />
+    <Resource Include="Resources\Icons\Tools\HermiteCurveTool.png" />
+    <Resource Include="Resources\Icons\Tools\Line.png" />
     <Resource Include="Resources\Icons\Tools\BasicMoveTool.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\Tools\BezierCurveTool.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\Tools\NubsTool.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Icons\Tools\NubsTool.png" />
+    <Resource Include="Resources\Icons\Tools\NURBS.png" />
+    <Resource Include="Resources\Icons\Tools\Pipetta.png" />
+    <Resource Include="Resources\Icons\Tools\Polygon.png" />
+    <Resource Include="Resources\Icons\Tools\Radír.png" />
+    <Resource Include="Resources\Icons\Tools\Selection.png" />
+    <Resource Include="Resources\Icons\Tools\Text.png" />
+    <Resource Include="Resources\Icons\Tools\Zoom.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

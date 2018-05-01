@@ -38,17 +38,16 @@ namespace DrawItFast.View.Windows
         {
             int width;
             int height;
-            if(int.TryParse(this.WidthInput.TextBoxText, out width) && int.TryParse(this.HeightInput.TextBoxText, out height))
+            if(int.TryParse(this.WidthInput.TextBox, out width) && int.TryParse(this.HeightInput.TextBox, out height))
             {
                 MainWindow.Instance.ImageWidth = width;
                 MainWindow.Instance.ImageHeight = height;
+                this.Close();
             }
             else
             {
                 MessageBox.Show("Only numbers are allowed for dimensions.");
             }
-
-            this.Close();
         }
     }
 }

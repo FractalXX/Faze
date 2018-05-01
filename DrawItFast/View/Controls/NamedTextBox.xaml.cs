@@ -20,30 +20,24 @@ namespace DrawItFast.View.Controls
     /// </summary>
     public partial class NamedTextBox : UserControl
     {
-        public static readonly DependencyProperty LabelTextProperty = DependencyProperty.Register("LabelText", typeof(string), typeof(NamedTextBox));
-        public static readonly DependencyProperty TextBoxTextProperty = DependencyProperty.Register("TextBoxText", typeof(string), typeof(NamedTextBox));
+        string LocalLabel = "";
 
-        public string LabelText
+        public string Label
         {
-            get
-            {
-                return (string)this.GetValue(LabelTextProperty);
-            }
+            get { return LocalLabel; }
             set
             {
-                this.SetValue(LabelTextProperty, value + ":");
+                LocalLabel = value;
+                BaseLabel.Content = value;
             }
         }
 
-        public string TextBoxText
+        public string TextBox
         {
-            get
-            {
-                return (string)this.GetValue(TextBoxTextProperty);
-            }
+            get { return BaseTextBox.Text; }
             set
             {
-                this.SetValue(TextBoxTextProperty, value);
+                BaseTextBox.Text = value;
             }
         }
 

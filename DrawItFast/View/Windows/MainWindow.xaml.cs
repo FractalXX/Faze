@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -19,6 +20,7 @@ using DrawItFast.Model.Drawing.Drawables;
 using DrawItFast.Model.Tools;
 using DrawItFast.View.Controls;
 using MahApps.Metro.Controls;
+using Microsoft.Win32;
 
 namespace DrawItFast.View.Windows
 {
@@ -196,6 +198,30 @@ namespace DrawItFast.View.Windows
             if(e.PropertyItem.DisplayName.Equals("SelectedShape"))
             {
                 e.Handled = false;
+            }
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            //string fileText = "Your output text";
+
+            SaveFileDialog dialog = new SaveFileDialog()
+            {
+                Filter = "Png files (*.png)|*.png|All(*.*)|*"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                RenderTargetBitmap rtb = new RenderTargetBitmap((int)this.D2DControl.RenderSize.Width, (int)this.D2DControl.RenderSize.Height, 96d, 96d, System.Windows.Media.PixelFormats.Default);
+                rtb.Render(this.D2DControl);
+
+                BitmapEncoder pngEncoder = new PngBitmapEncoder();
+                pngEncoder.Frames.Add(BitmapFrame.Create(rtb));
+
+                using (var fs = File.OpenWrite(dialog.FileName))
+                {
+                    pngEncoder.Save(fs);
+                }
             }
         }
     }
