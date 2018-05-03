@@ -138,13 +138,14 @@
     </Compile>
     <Compile Include="Model\Drawing\Drawables\Curves\BezierCurve.cs" />
     <Compile Include="Model\Drawing\Drawables\Curves\Nubs.cs" />
+    <Compile Include="Model\Drawing\Drawables\Polygon.cs" />
     <Compile Include="Model\Drawing\Drawables\Shape.cs" />
     <Compile Include="Model\Drawing\MathHelper.cs" />
-    <Compile Include="Model\ShapeFactory.cs" />
     <Compile Include="Model\Tools\Curves\BezierCurveTool.cs" />
     <Compile Include="Model\Tools\Curves\HermiteCurveTool.cs" />
     <Compile Include="Model\Tools\Curves\NubsTool.cs" />
     <Compile Include="Model\Tools\General\BasicMoveTool.cs" />
+    <Compile Include="Model\Tools\General\PolygonTool.cs" />
     <Compile Include="Model\Tools\IDrawTool.cs" />
     <Compile Include="Model\Tools\IMoveTool.cs" />
     <Compile Include="Model\Tools\ShapeTool.cs" />
@@ -213,7 +214,7 @@
     <Resource Include="Resources\Icons\Tools\NubsTool.png" />
     <Resource Include="Resources\Icons\Tools\NURBS.png" />
     <Resource Include="Resources\Icons\Tools\Pipetta.png" />
-    <Resource Include="Resources\Icons\Tools\Polygon.png" />
+    <Resource Include="Resources\Icons\Tools\PolygonTool.png" />
     <Resource Include="Resources\Icons\Tools\Radír.png" />
     <Resource Include="Resources\Icons\Tools\Selection.png" />
     <Resource Include="Resources\Icons\Tools\Text.png" />
