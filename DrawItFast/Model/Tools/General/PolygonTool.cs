@@ -13,24 +13,12 @@ namespace DrawItFast.Model.Tools.General
 {
     class PolygonTool : ShapeTool
     {
-        public override bool TrySelectShape(IDrawable shape)
+        public override Type ShapeType
         {
-            if (shape is Polygon)
+            get
             {
-                if (this.selectedShape != null)
-                {
-                    this.selectedShape.IsSelected = false;
-                }
-
-                this.selectedShape = shape as Polygon;
-
-                if (shape != null)
-                {
-                    this.selectedShape.IsSelected = true;
-                }
-                return true;
+                return typeof(Polygon);
             }
-            return false;
         }
 
         protected override Shape CreateShape(Point startPoint, Color lineColor, Color fillColor, int lineThickness)

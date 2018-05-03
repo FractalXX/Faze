@@ -14,6 +14,14 @@ namespace DrawItFast.Model.Tools.Curves
 {
     class NubsTool : ShapeTool
     {
+        public override Type ShapeType
+        {
+            get
+            {
+                return typeof(Nubs);
+            }
+        }
+
         protected override Shape CreateShape(Point startPoint, Color lineColor, Color fillColor, int lineThickness)
         {
             Nubs newCurve = new Nubs();
@@ -23,26 +31,6 @@ namespace DrawItFast.Model.Tools.Curves
             newCurve.AddPoint(startPoint);
 
             return newCurve;
-        }
-
-        public override bool TrySelectShape(IDrawable shape)
-        {
-            if (shape is Nubs)
-            {
-                if (this.selectedShape != null)
-                {
-                    this.selectedShape.IsSelected = false;
-                }
-
-                this.selectedShape = shape as Nubs;
-
-                if (shape != null)
-                {
-                    this.selectedShape.IsSelected = true;
-                }
-                return true;
-            }
-            return false;
         }
 
         public override void MouseDown(Point point, MouseEventArgs args)

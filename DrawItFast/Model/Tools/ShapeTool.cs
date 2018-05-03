@@ -115,6 +115,14 @@ namespace DrawItFast.Model.Tools
             }
         }
 
+        public virtual Type ShapeType
+        {
+            get
+            {
+                return typeof(Shape);
+            }
+        }
+
         protected ShapeTool()
         {
             this.selectedShape = null;
@@ -137,17 +145,21 @@ namespace DrawItFast.Model.Tools
                         }
                     }
                 }
-
-                if (this.selectedShape == null)
+                else
                 {
                     Shape shape = this.CreateShape(point, this.lineColor, this.fillColor, this.lineThickness);
 
                     if (shape != null && this.TrySelectShape(shape))
                     {
                         this.grabbedPointIndex = this.selectedShape.PointCount - 1;
-                        MainWindow.Instance.AddShape(shape); 
+                        MainWindow.Instance.AddShape(shape);
                     }
                 }
+            }
+            else if (args.RightButton == MouseButtonState.Pressed)
+            {
+                this.TrySelectShape(null);
+                // this.selectedShape = null;
             }
         }
 
@@ -167,7 +179,34 @@ namespace DrawItFast.Model.Tools
             this.grabbedPointIndex = -1;
         }
 
-        public abstract bool TrySelectShape(IDrawable shape);
+        public bool TrySelectShape(IDrawable shape)
+        {
+            if (shape == null)
+            {
+                if (this.selectedShape != null)
+                {
+                    this.selectedShape.IsSelected = false;
+                }
+
+                this.selectedShape = null;
+                return true;
+            }
+            else if (shape.GetType() == this.ShapeType)
+            {
+
+                if (this.selectedShape != null)
+                {
+                    this.selectedShape.IsSelected = false;
+                }
+
+                this.selectedShape = shape as Shape;
+                this.selectedShape.IsSelected = true;
+                return true;
+            }
+
+            return false;
+        }
+
         protected abstract Shape CreateShape(Point startPoint, Color lineColor, Color fillColor, int lineThickness);
     }
 }

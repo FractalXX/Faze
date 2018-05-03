@@ -141,21 +141,23 @@ namespace DrawItFast.View.Windows
         private void DrawCanvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Point mousePosition = e.GetPosition(this.DrawCanvas);
+            bool justSelected = false;
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if(this.SelectedTool != null && this.SelectedTool is IMoveTool)
+                if(this.SelectedTool != null && this.SelectedTool is IMoveTool && (this.SelectedTool as IMoveTool).SelectedShape == null)
                 {
                     for (int i = 0; i < this.drawables.Count; i++)
                     {
                         if (this.drawables[i].IsMouseHovering(mousePosition) && (this.SelectedTool as IMoveTool).TrySelectShape(this.drawables[i]))
                         {
+                            justSelected = true;
                             break;
                         }
                     }
                 }
             }
 
-            if (this.SelectedTool != null)
+            if (this.SelectedTool != null && !justSelected)
             {
                 this.SelectedTool.MouseDown(mousePosition, e);
             }

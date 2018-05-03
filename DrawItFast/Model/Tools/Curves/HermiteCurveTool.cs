@@ -18,6 +18,14 @@ namespace DrawItFast.Model.Tools.Curves
 {
     class HermiteCurveTool : ShapeTool
     {
+        public override Type ShapeType
+        {
+            get
+            {
+                return typeof(HermiteCurve);
+            }
+        }
+
         public override void MouseDown(Point point, MouseEventArgs args)
         {
             base.MouseDown(point, args);
@@ -33,26 +41,6 @@ namespace DrawItFast.Model.Tools.Curves
                     }
                 }
             }
-        }
-
-        public override bool TrySelectShape(IDrawable shape)
-        {
-            if (shape is HermiteCurve)
-            {
-                if (this.selectedShape != null)
-                {
-                    this.selectedShape.IsSelected = false;
-                }
-
-                this.selectedShape = shape as HermiteCurve;
-
-                if (shape != null)
-                {
-                    this.selectedShape.IsSelected = true;
-                }
-                return true;
-            }
-            return false;
         }
 
         protected override Shape CreateShape(Point startPoint, Color lineColor, Color fillColor, int lineThickness)

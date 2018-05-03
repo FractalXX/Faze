@@ -16,8 +16,10 @@ namespace DrawItFast.Model.Drawing.Drawables
         {
             for(int i = 0; i < this.PointCount - 1; i++)
             {
-                float upper = (float)Math.Abs((this.points[i + 1].Y - this.points[i].Y) * p.X - (this.points[i + 1].X - this.points[i].X) * p.Y + this.points[i + 1].X * this.points[i].Y - this.points[i + 1].X * this.points[i].X);
-                float denom = (float)Math.Sqrt(Math.Pow(this.points[i + 1].Y - this.points[i].Y, 2) - Math.Pow(this.points[i + 1].X - this.points[i].X, 2));
+                float slope = (this.points[i + 1].Y - this.points[i].Y) / (this.points[i + 1].X - this.points[i].X);
+                float param = this.points[i].Y - slope * this.points[i].X;
+                float upper = (float)Math.Abs(p.Y - slope * p.X - param);
+                float denom = (float)Math.Sqrt(1 + slope * slope);
                 float distance = upper / denom;
 
                 if(distance <= MainWindow.Instance.PointSize)

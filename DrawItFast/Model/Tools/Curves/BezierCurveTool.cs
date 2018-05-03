@@ -14,6 +14,14 @@ namespace DrawItFast.Model.Tools.Curves
 {
     class BezierCurveTool : ShapeTool
     {
+        public override Type ShapeType
+        {
+            get
+            {
+                return typeof(BezierCurve);
+            }
+        }
+
         public override void MouseDown(Point point, MouseEventArgs args)
         {
             base.MouseDown(point, args);
@@ -25,26 +33,6 @@ namespace DrawItFast.Model.Tools.Curves
                     this.grabbedPointIndex = this.selectedShape.PointCount - 1;
                 }
             }
-        }
-
-        public override bool TrySelectShape(IDrawable shape)
-        {
-            if (shape is BezierCurve)
-            {
-                if (this.selectedShape != null)
-                {
-                    this.selectedShape.IsSelected = false;
-                }
-
-                this.selectedShape = shape as BezierCurve;
-
-                if (shape != null)
-                {
-                    this.selectedShape.IsSelected = true;
-                }
-                return true;
-            }
-            return false;
         }
 
         protected override Shape CreateShape(Point startPoint, Color lineColor, Color fillColor, int lineThickness)

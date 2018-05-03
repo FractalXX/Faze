@@ -47,6 +47,11 @@ namespace DrawItFast.Model.Tools.General
                     }
                 }
             }
+            else if (args.RightButton == MouseButtonState.Pressed)
+            {
+                this.TrySelectShape(null);
+                // this.selectedShape = null;
+            }
 
             this.mouseBuffer = point;
         }
@@ -82,7 +87,16 @@ namespace DrawItFast.Model.Tools.General
 
         public bool TrySelectShape(IDrawable shape)
         {
+            if (this.selectedShape != null)
+            {
+                this.selectedShape.IsSelected = false;
+            }
             this.selectedShape = shape;
+
+            if(shape != null)
+            {
+                shape.IsSelected = true;
+            }
             return true;
         }
     }
