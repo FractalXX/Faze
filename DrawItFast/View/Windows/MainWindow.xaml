@@ -30,24 +30,30 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Border BorderBrush="Black" BorderThickness="0 0 0 1">
-            <Menu Grid.Row="0" Background="{StaticResource BorderBarColor}">
+            <Menu Grid.Row="0" Background="{DynamicResource BorderBarColor}">
                 <MenuItem Header="_File">
                     <MenuItem Header="_New" Click="New_Click"/>
                     <MenuItem Header="_Open"/>
                     <MenuItem Header="_Save" Click="Save_Click"/>
                     <MenuItem Header="_Close"/>
                 </MenuItem>
+                <MenuItem Header="_Options">
+                    <MenuItem Header="_Themes">
+                        <MenuItem Header="_Dark" Click="ThemeItem_Click"/>
+                        <MenuItem Header="_Light" Click="ThemeItem_Click"/>
+                    </MenuItem>
+                </MenuItem>
             </Menu>
         </Border>
 
         <DockPanel Grid.Row="1">
             <Border BorderBrush="Black" BorderThickness="0 0 1 0">
-                <ToolBarTray x:Name="Toolbox" Width="40" Orientation="Vertical" Background="{StaticResource BorderBarColor}">
-                    <ToolBar x:Name="BasicToolBox" Background="{StaticResource ToolBarBackgroundColor}" Width="{Binding Width, ElementName=Toolbox}" Style="{DynamicResource SideToolBarStyle}"/>
+                <ToolBarTray x:Name="Toolbox" Width="40" Orientation="Vertical" Background="{DynamicResource BorderBarColor}">
+                    <ToolBar x:Name="BasicToolBox" Background="{DynamicResource ToolBarBackgroundColor}" Width="{Binding Width, ElementName=Toolbox}" Style="{DynamicResource SideToolBarStyle}"/>
                 </ToolBarTray>
             </Border>
 
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="{StaticResource CanvasBackground}">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Background="{DynamicResource CanvasBackground}">
                 <Canvas x:Name="DrawCanvas" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" Width="{Binding ImageWidth, ElementName=Main}" Height="{Binding ImageHeight, ElementName=Main}" Margin="10"
                         MouseDown="DrawCanvas_MouseDown"
                         MouseUp="DrawCanvas_MouseUp"
@@ -61,7 +67,7 @@
         </DockPanel>
 
         <Border BorderBrush="Black" BorderThickness="1 0 0 0" HorizontalAlignment="Right" Grid.Row="1">
-            <xctk:PropertyGrid MaxWidth="400" Width="200" x:Name="CurrentToolData" Background="{StaticResource ToolBarBackgroundColor}" SelectedObject="{Binding SelectedTool, ElementName=Main}" AutoGenerateProperties="True" PreparePropertyItem="CurrentToolData_PreparePropertyItem" Foreground="Black">
+            <xctk:PropertyGrid MaxWidth="400" Width="200" x:Name="CurrentToolData" Background="{DynamicResource ToolBarBackgroundColor}" SelectedObject="{Binding SelectedTool, ElementName=Main}" AutoGenerateProperties="True" PreparePropertyItem="CurrentToolData_PreparePropertyItem" Foreground="Black">
 
             </xctk:PropertyGrid>
         </Border>

@@ -226,5 +226,53 @@ namespace DrawItFast.View.Windows
                 }
             }
         }
+
+        private void ThemeItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem item = sender as MenuItem;
+            switch(item.Header)
+            {
+                case "_Dark":
+                    this.Resources["ToolBarBackgroundColor"] = new SolidColorBrush(Color.FromArgb(255, 51, 51, 51));
+                    this.Resources["BorderBarColor"] = new SolidColorBrush(Color.FromArgb(255, 34, 34, 34));
+                    this.Resources["CanvasBackground"] = new SolidColorBrush(Color.FromArgb(255, 68, 68, 68));
+                    this.Resources["ToolBarButtonPressed"] = new SolidColorBrush(Color.FromArgb(255, 102, 102, 102));
+                    this.ResetDictionariesForTheme("BaseDark");
+                    break;
+
+                case "_Light":
+                    this.Resources["ToolBarBackgroundColor"] = new SolidColorBrush(Color.FromArgb(255, 208, 208, 208));
+                    this.Resources["BorderBarColor"] = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+                    this.Resources["CanvasBackground"] = new SolidColorBrush(Color.FromArgb(255, 208, 218, 232));
+                    this.Resources["ToolBarButtonPressed"] = new SolidColorBrush(Color.FromArgb(255, 224, 224, 224));
+                    this.ResetDictionariesForTheme("Blue");
+                    break;
+            }
+        }
+
+        private void ResetDictionariesForTheme(string theme)
+        {
+            Application.Current.Resources.MergedDictionaries.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+            {
+                Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml", UriKind.RelativeOrAbsolute)
+            });
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+            {
+                Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml", UriKind.RelativeOrAbsolute)
+            });
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+            {
+                Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml", UriKind.RelativeOrAbsolute)
+            });
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+            {
+                Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml", UriKind.RelativeOrAbsolute)
+            });
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+            {
+                Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/" + theme + ".xaml", UriKind.RelativeOrAbsolute)
+            });
+        }
     }
 }
