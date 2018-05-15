@@ -42,6 +42,7 @@ namespace DrawItFast.View.Windows
             {
                 MainWindow.Instance.ImageWidth = width;
                 MainWindow.Instance.ImageHeight = height;
+                MainWindow.Instance.ClearCanvas();
                 this.Close();
             }
             else

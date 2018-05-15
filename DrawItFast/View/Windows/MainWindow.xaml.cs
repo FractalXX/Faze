@@ -124,7 +124,7 @@ namespace DrawItFast.View.Windows
 
         private void UpdateToolColors()
         {
-            if(this.SelectedTool != null && this.SelectedTool is IDrawTool)
+            if (this.SelectedTool != null && this.SelectedTool is IDrawTool)
             {
                 IDrawTool tool = this.SelectedTool as IDrawTool;
                 tool.Color1 = this.colorLine;
@@ -144,7 +144,7 @@ namespace DrawItFast.View.Windows
             bool justSelected = false;
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if(this.SelectedTool != null && this.SelectedTool is IMoveTool && (this.SelectedTool as IMoveTool).SelectedShape == null)
+                if (this.SelectedTool != null && this.SelectedTool is IMoveTool && (this.SelectedTool as IMoveTool).SelectedShape == null)
                 {
                     for (int i = 0; i < this.drawables.Count; i++)
                     {
@@ -165,7 +165,7 @@ namespace DrawItFast.View.Windows
 
         private void DrawCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if(this.SelectedTool != null)
+            if (this.SelectedTool != null)
             {
                 this.SelectedTool.MouseMove(e.GetPosition(this.DrawCanvas), e);
             }
@@ -173,15 +173,21 @@ namespace DrawItFast.View.Windows
 
         private void DrawCanvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if(this.SelectedTool != null)
+            if (this.SelectedTool != null)
             {
                 this.SelectedTool.MouseUp(e.GetPosition(this.DrawCanvas), e);
             }
         }
 
+        internal void ClearCanvas()
+        {
+            this.drawables.Clear();
+            // delete brush drawn stuff
+        }
+
         internal void AddShape(IDrawable shape)
         {
-            if(!this.drawables.Contains(shape))
+            if (!this.drawables.Contains(shape))
             {
                 this.drawables.Add(shape);
             }
@@ -197,7 +203,7 @@ namespace DrawItFast.View.Windows
 
         private void CurrentToolData_PreparePropertyItem(object sender, Xceed.Wpf.Toolkit.PropertyGrid.PropertyItemEventArgs e)
         {
-            if(e.PropertyItem.DisplayName.Equals("SelectedShape"))
+            if (e.PropertyItem.DisplayName.Equals("SelectedShape"))
             {
                 e.Handled = false;
             }
@@ -230,23 +236,21 @@ namespace DrawItFast.View.Windows
         private void ThemeItem_Click(object sender, RoutedEventArgs e)
         {
             MenuItem item = sender as MenuItem;
-            switch(item.Header)
+            if ((string)item.Header == "_Dark")
             {
-                case "_Dark":
-                    this.Resources["ToolBarBackgroundColor"] = new SolidColorBrush(Color.FromArgb(255, 51, 51, 51));
-                    this.Resources["BorderBarColor"] = new SolidColorBrush(Color.FromArgb(255, 34, 34, 34));
-                    this.Resources["CanvasBackground"] = new SolidColorBrush(Color.FromArgb(255, 68, 68, 68));
-                    this.Resources["ToolBarButtonPressed"] = new SolidColorBrush(Color.FromArgb(255, 102, 102, 102));
-                    this.ResetDictionariesForTheme("BaseDark");
-                    break;
-
-                case "_Light":
-                    this.Resources["ToolBarBackgroundColor"] = new SolidColorBrush(Color.FromArgb(255, 208, 208, 208));
-                    this.Resources["BorderBarColor"] = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
-                    this.Resources["CanvasBackground"] = new SolidColorBrush(Color.FromArgb(255, 208, 218, 232));
-                    this.Resources["ToolBarButtonPressed"] = new SolidColorBrush(Color.FromArgb(255, 224, 224, 224));
-                    this.ResetDictionariesForTheme("Blue");
-                    break;
+                this.Resources["ToolBarBackgroundColor"] = new SolidColorBrush(Color.FromArgb(255, 51, 51, 51));
+                this.Resources["BorderBarColor"] = new SolidColorBrush(Color.FromArgb(255, 34, 34, 34));
+                this.Resources["CanvasBackground"] = new SolidColorBrush(Color.FromArgb(255, 68, 68, 68));
+                this.Resources["ToolBarButtonPressed"] = new SolidColorBrush(Color.FromArgb(255, 102, 102, 102));
+                this.ResetDictionariesForTheme("BaseDark");
+            }
+            else if ((string)item.Header == "_Light")
+            {
+                this.Resources["ToolBarBackgroundColor"] = new SolidColorBrush(Color.FromArgb(255, 208, 208, 208));
+                this.Resources["BorderBarColor"] = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
+                this.Resources["CanvasBackground"] = new SolidColorBrush(Color.FromArgb(255, 208, 218, 232));
+                this.Resources["ToolBarButtonPressed"] = new SolidColorBrush(Color.FromArgb(255, 224, 224, 224));
+                this.ResetDictionariesForTheme("Blue");
             }
         }
 

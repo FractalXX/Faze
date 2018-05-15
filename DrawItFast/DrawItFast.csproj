@@ -145,6 +145,7 @@
     <Compile Include="Model\Tools\Curves\HermiteCurveTool.cs" />
     <Compile Include="Model\Tools\Curves\NubsTool.cs" />
     <Compile Include="Model\Tools\General\BasicMoveTool.cs" />
+    <Compile Include="Model\Tools\General\BrushTool.cs" />
     <Compile Include="Model\Tools\General\PolygonTool.cs" />
     <Compile Include="Model\Tools\IDrawTool.cs" />
     <Compile Include="Model\Tools\IMoveTool.cs" />
