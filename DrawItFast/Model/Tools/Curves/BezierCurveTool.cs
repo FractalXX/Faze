@@ -29,8 +29,34 @@ namespace DrawItFast.Model.Tools.Curves
             {
                 if (this.selectedShape != null && this.grabbedPointIndex == -1)
                 {
-                    this.selectedShape.AddPoint(point);
+                    int degree = (this.selectedShape as BezierCurve).Degree;
+                    if(this.selectedShape.PointCount > degree && this.selectedShape.PointCount % degree == 1)
+                    {
+                        this.selectedShape.AddPoint(MathHelper.GetPointOnLine(this.selectedShape.GetPoint(this.selectedShape.PointCount - 2), this.selectedShape.GetPoint(this.selectedShape.PointCount - 1), (int)point.Y));
+                    }
+                    else
+                    {
+                        this.selectedShape.AddPoint(point);
+                    }
                     this.grabbedPointIndex = this.selectedShape.PointCount - 1;
+                }
+            }
+        }
+
+        public override void MouseMove(Point point, MouseEventArgs args)
+        {
+            if(this.grabbedPointIndex != -1)
+            {
+                int degree = (this.selectedShape as BezierCurve).Degree;
+                if (this.selectedShape.PointCount > degree && this.grabbedPointIndex % degree == 1)
+                {
+                    this.selectedShape.SetPoint(
+                        this.grabbedPointIndex,
+                        MathHelper.GetPointOnLine(this.selectedShape.GetPoint(this.selectedShape.PointCount - 2), this.selectedShape.GetPoint(this.selectedShape.PointCount - 1), (int)point.Y));
+                }
+                else
+                {
+                    base.MouseMove(point, args);
                 }
             }
         }

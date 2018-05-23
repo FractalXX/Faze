@@ -7,64 +7,86 @@ using System.Windows;
 using SharpDX.Direct2D1;
 using SharpDX.Mathematics.Interop;
 
+using DrawItFast.Model.Drawing;
+using DrawItFast.View.Windows;
+
 namespace DrawItFast.Model.Drawing.Drawables.Curves
 {
     class BezierCurve : Shape
     {
         private float resolution;
+        private int degree;
+
+        public int Degree
+        {
+            get
+            {
+                return this.degree;
+            }
+        }
 
         public BezierCurve()
         {
             this.resolution = 100;
+            this.degree = 3;
         }
 
         public override void Draw(RenderTarget target)
         {
-            if (this.points.Count > 2)
+            for (int j = 0; j < this.points.Count - 3; j += 3)
             {
-                int n = this.points.Count - 1;
-
-                float t = 0;
-                float h = 1 / this.resolution;
-                float x0 = 0, y0 = 0, x1, y1;
-
-                SolidColorBrush curveBrush = new SolidColorBrush(target, this.LineColor);
-                PathGeometry geometry = new PathGeometry(target.Factory);
-                GeometrySink gs = geometry.Open();
-                gs.BeginFigure(this.points[0], FigureBegin.Filled);
-
-                for (int i = 0; i <= n; i++)
+                List<RawVector2> p = new List<RawVector2>();
+                for (int i = j; i <= j + this.degree; i++)
                 {
-                    x0 += MathHelper.B(t, n, i) * this.points[i].X;
-                    y0 += MathHelper.B(t, n, i) * this.points[i].Y;
-
+                    p.Add(this.points[i]);
                 }
 
-                while (t < 1)
+                if(p.Count > this.degree)
                 {
-                    t += h;
+                    int n = this.degree;
 
-                    x1 = 0;
-                    y1 = 0;
+                    float t = 0;
+                    float h = 1 / this.resolution;
+                    float x0 = 0, y0 = 0, x1, y1;
+
+                    SolidColorBrush curveBrush = new SolidColorBrush(target, this.LineColor);
+                    PathGeometry geometry = new PathGeometry(target.Factory);
+                    GeometrySink gs = geometry.Open();
+                    gs.BeginFigure(p[0], FigureBegin.Filled);
 
                     for (int i = 0; i <= n; i++)
                     {
-                        x1 += MathHelper.B(t, n, i) * this.points[i].X;
-                        y1 += MathHelper.B(t, n, i) * this.points[i].Y;
+                        x0 += MathHelper.B(t, n, i) * p[i].X;
+                        y0 += MathHelper.B(t, n, i) * p[i].Y;
+
                     }
 
-                    gs.AddLine(new RawVector2() { X = x0, Y = y0 });
-                    gs.AddLine(new RawVector2() { X = x1, Y = y1 });
+                    while (t < 1)
+                    {
+                        t += h;
 
-                    x0 = x1;
-                    y0 = y1;
+                        x1 = 0;
+                        y1 = 0;
+
+                        for (int i = 0; i <= n; i++)
+                        {
+                            x1 += MathHelper.B(t, n, i) * p[i].X;
+                            y1 += MathHelper.B(t, n, i) * p[i].Y;
+                        }
+
+                        gs.AddLine(new RawVector2() { X = x0, Y = y0 });
+                        gs.AddLine(new RawVector2() { X = x1, Y = y1 });
+
+                        x0 = x1;
+                        y0 = y1;
+                    }
+
+                    gs.EndFigure(FigureEnd.Open);
+                    gs.Close();
+
+                    target.DrawGeometry(geometry, curveBrush);
+                    curveBrush.Dispose();
                 }
-
-                gs.EndFigure(FigureEnd.Open);
-                gs.Close();
-
-                target.DrawGeometry(geometry, curveBrush);
-                curveBrush.Dispose();
             }
 
             base.Draw(target);
@@ -78,6 +100,16 @@ namespace DrawItFast.Model.Drawing.Drawables.Curves
                 target.DrawLine(this.points[i], this.points[i + 1], brush);
             }
             brush.Dispose();
+
+            for(int i = 2; i < this.points.Count - 1; i += 3)
+            {
+                brush = new SolidColorBrush(target, System.Windows.Media.Colors.Yellow.ToRawColor4());
+                target.DrawLine(
+                    MathHelper.GetPointOnLine(this.points[i].ToPoint(), this.points[i + 1].ToPoint(), 0).ToRawVector2(),
+                    MathHelper.GetPointOnLine(this.points[i].ToPoint(), this.points[i + 1].ToPoint(), (int)MainWindow.Instance.Height).ToRawVector2(),
+                    brush);                
+                brush.Dispose();
+            }
 
             base.DrawGuides(target);
         }

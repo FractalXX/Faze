@@ -47,12 +47,17 @@ namespace DrawItFast.Model.Drawing
             polygonGeometry.Dispose();
         }
 
-        public static RawVector2 PointToRawVector2(Point point)
+        public static RawVector2 ToRawVector2(this Point point)
         {
             RawVector2 vector = new RawVector2();
             vector.X = (float)point.X;
             vector.Y = (float)point.Y;
             return vector;
+        }
+
+        public static Point ToPoint(this RawVector2 vector)
+        {
+            return new Point(vector.X, vector.Y);
         }
 
         private static float Distance(RawVector2 V1, RawVector2 V2)

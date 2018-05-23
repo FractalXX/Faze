@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DrawItFast.Model.Drawing
 {
@@ -57,7 +58,7 @@ namespace DrawItFast.Model.Drawing
             };
         }
 
-        internal static float NubsFunction(float[] U, float u, int j, int k)
+        /*internal static float NubsFunction(float[] U, float u, int j, int k)
         {
             if (k == 1)
             {
@@ -88,6 +89,64 @@ namespace DrawItFast.Model.Drawing
             }
 
             return part1 + part2;
+        }*/
+
+        private static int GetLowerLimitIndex(float value, float[] knotValues)
+        {
+            for(int i = 0; i < knotValues.Length - 1; i++)
+            {
+                if(value >= knotValues[i] && value < knotValues[i + 1])
+                {
+                    return i;
+                }
+            }
+
+            throw new ArgumentException("Can't find index for the given value.");
+        }
+
+        internal static float[] NubsFunction(int n, int degree, int m, float u, float[] U)
+        {
+            float[] baseValues = new float[n + 1];
+            if(u == U[0])
+            {
+                baseValues[0] = 1.0f;
+            }
+            else if(u == U[m - 1])
+            {
+                baseValues[n - 1] = 1.0f;
+            }
+            else
+            {
+                int k = GetLowerLimitIndex(u, U);
+
+                baseValues[k] = 1;
+
+                for(int i = 1; i < degree; i++)
+                {
+                    baseValues[k - i] = ((U[k + 1] - u) / (U[k + 1] - U[k - i + 1])) * baseValues[k - i + 1];
+                    for (int j = k - i + 1; j < k; j++)
+                    {
+                        float A = (u - U[j]) / (U[j + i] - U[j]) * baseValues[j];
+                        float B = (U[j + i + 1] - u) / (U[j + i + 1] - U[j + 1]) * baseValues[j + 1];
+
+                        baseValues[j] = A + B;
+                    }
+                    baseValues[k] = (u - U[k]) / (U[k + i] - U[k]) * baseValues[k];
+                }
+            }
+
+            return baseValues;
+        }
+
+        internal static Point GetPointOnLine(Point p1, Point p2, int y)
+        {
+            Point result = new Point();
+            result.Y = y;
+            if(p1.Y - p2.Y != 0)
+            {
+                result.X = (result.Y - p1.Y) * (p1.X - p2.X) / (p1.Y - p2.Y) + p1.X;
+            }
+            return result;
         }
     }
 }

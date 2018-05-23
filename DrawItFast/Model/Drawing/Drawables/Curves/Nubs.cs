@@ -23,10 +23,10 @@ namespace DrawItFast.Model.Drawing.Drawables.Curves
         public Nubs()
         {
             this.degree = 4;
-            this.SetNodeValues();
+            this.SetKnotValues();
         }
 
-        private void SetNodeValues()
+        private void SetKnotValues()
         {
             this.knotValues = new float[this.points.Count + this.degree];
             //this.knotValues[0] = 0;
@@ -48,15 +48,16 @@ namespace DrawItFast.Model.Drawing.Drawables.Curves
 
                 float x0 = 0;
                 float y0 = 0;
+                float x1;
+                float y1;
+
+                float[] baseValues = MathHelper.NubsFunction(this.points.Count - 1, this.degree, this.knotValues.Length - 1, u, this.knotValues);
 
                 for (int i = 0; i < this.points.Count; i++)
                 {
-                    x0 += MathHelper.NubsFunction(this.knotValues, u, i, degree) * this.points[i].X;
-                    y0 += MathHelper.NubsFunction(this.knotValues, u, i, degree) * this.points[i].Y;
+                    x0 += baseValues[this.points.Count - i - 1] * this.points[i].X;
+                    y0 += baseValues[this.points.Count - i - 1] * this.points[i].Y;
                 }
-
-                float x1;
-                float y1;
 
                 SolidColorBrush curveBrush = new SolidColorBrush(target, this.LineColor);
                 PathGeometry geometry = new PathGeometry(target.Factory);
@@ -70,10 +71,12 @@ namespace DrawItFast.Model.Drawing.Drawables.Curves
                     x1 = 0;
                     y1 = 0;
 
+                    baseValues = MathHelper.NubsFunction(this.points.Count, this.degree, this.knotValues.Length, u, this.knotValues);
+
                     for (int i = 0; i < this.points.Count; i++)
                     {
-                        x1 += MathHelper.NubsFunction(this.knotValues, u, i, degree) * this.points[i].X;
-                        y1 += MathHelper.NubsFunction(this.knotValues, u, i, degree) * this.points[i].Y;
+                        x1 += baseValues[this.points.Count - i - 1] * this.points[i].X;
+                        y1 += baseValues[this.points.Count - i - 1] * this.points[i].Y;
                     }
 
                     gs.AddLine(new RawVector2() { X = x0, Y = y0 });
@@ -114,23 +117,25 @@ namespace DrawItFast.Model.Drawing.Drawables.Curves
                 float u = this.knotValues[this.degree - 1];
                 float h = 1f / 250;
 
-                float x1;
-                float y1;
+                float x;
+                float y;
 
                 while (u < this.knotValues[this.points.Count + 1])
                 {
                     u += h;
 
-                    x1 = 0;
-                    y1 = 0;
+                    x = 0;
+                    y = 0;
+
+                    float[] baseValues = MathHelper.NubsFunction(this.points.Count - 1, this.degree, this.knotValues.Length - 1, u, this.knotValues);
 
                     for (int i = 0; i < this.points.Count; i++)
                     {
-                        x1 += MathHelper.NubsFunction(this.knotValues, u, i, degree) * this.points[i].X;
-                        y1 += MathHelper.NubsFunction(this.knotValues, u, i, degree) * this.points[i].Y;
+                        x += baseValues[this.points.Count - i - 1] * this.points[i].X;
+                        y += baseValues[this.points.Count - i - 1] * this.points[i].Y;
                     }
 
-                    if(Math.Abs(p.X - x1) <= range && Math.Abs(p.Y - y1) <= range)
+                    if (Math.Abs(p.X - x) <= range && Math.Abs(p.Y - y) <= range)
                     {
                         return true;
                     }
@@ -142,7 +147,7 @@ namespace DrawItFast.Model.Drawing.Drawables.Curves
 
         protected override void OnAddPoint(Point point)
         {
-            this.SetNodeValues();
+            this.SetKnotValues();
         }
     }
 }
